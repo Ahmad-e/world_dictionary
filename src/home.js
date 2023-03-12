@@ -24,7 +24,7 @@ const Home = () => {
             <Col xs={12} md={7}><h5><br/>If you are looking for a country that speaks a specific language, you can get information just you have to enter the language by click <a className="button_" href="/search_by_language">language search</a></h5>   </Col>
             <Col xs={12} md={4}> <p><Svg3/></p></Col>
           </Row>
-        </Container>
+           </Container>
       );
   };
   
