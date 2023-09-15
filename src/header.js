@@ -1,10 +1,9 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Header = () => {
-    return <Navbar className="header" expand="sm">
+    return <Navbar expand="sm">
             <Container>
             <a className="link2" href="/">
                 <h4>

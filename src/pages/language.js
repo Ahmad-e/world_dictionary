@@ -9,7 +9,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import NotFound from '../svgs/notfound';
 import Search from '../svgs/search'
-
+import Load from './load';
 const Language = () => {
 
   const [feach ,setFeach] =React.useState(0);
@@ -22,6 +22,7 @@ const Language = () => {
     setFeach(1);
     try {
       axios.get("https://restcountries.com/v3.1/lang/"+cap).then((response) => {
+        console.log(response.data[0].name.official)
         setData(response.data);}); 
       setData(null);
     } catch (err) {
@@ -33,7 +34,8 @@ const Language = () => {
   if(!data && feach===1)
     return (
       <Container className="form_">
-      <Row className="justify-content-md-center">
+        <Load run={loading} />
+      <Row className="justify-content-center">
         <Col sm={12} md={8} lg={6}>
         <InputGroup size="lg" className="mb-3">
           <Form.Control
@@ -43,7 +45,7 @@ const Language = () => {
             aria-describedby="basic-addon2"
             onChange={e=>setCap(e.target.value)}
           />
-          <Button onClick={()=>handleClick()}  variant="outline-dark" id="button-addon2">
+          <Button onClick={()=>handleClick()}  variant="outline-primary" id="button-addon2">
            <Search height="5px" />
           </Button>
         </InputGroup>
@@ -61,7 +63,8 @@ const Language = () => {
       if(feach===1)
         return (
           <Container className="form_">
-          <Row className="justify-content-md-center">
+            <Load run={loading} />
+          <Row className="justify-content-center">
             <Col sm={12} md={8} lg={6}>
             <InputGroup size="lg" className="mb-3">
               <Form.Control
@@ -71,17 +74,19 @@ const Language = () => {
                 aria-describedby="basic-addon2"
                 onChange={e=>setCap(e.target.value)}
               />
-              <Button onClick={()=>handleClick()}  variant="outline-dark" id="button-addon2">
+              <Button onClick={()=>handleClick()}  variant="outline-primary" id="button-addon2">
                 <Search height="5px" />
               </Button>
             </InputGroup>
             </Col>
           </Row>
-          <Row>
+          <Row className="justify-content-center" >
                     {
-                      data.map((item)=>
+                      data.map((item)=>{
+                        if(item.name.official!=="State of Israel")
+                        return(
                         <Col  md={12} lg={6}>
-                          <div className="div2" >
+                          <div className="div2 divL" >
                             <h3> Countrie : {item.name.official} </h3>
                             <h3> Native name : {item.translations.ara.common} </h3>
                             <h4> capital : {item.capital} </h4> 
@@ -92,6 +97,7 @@ const Language = () => {
                             <div className="div2"><img src={item.flags.png} /></div>
                           </div>
                         </Col>
+                        )}
                         )
                     }       
           </Row>
@@ -100,10 +106,11 @@ const Language = () => {
       if(feach===0)
         return (
           <Container className="form_">
+            <Load run={loading} />
           <Row>
             <h4>Enter the language using English</h4><br/><br/><br/>
           </Row>
-          <Row className="justify-content-md-center">
+          <Row className="justify-content-center">
             <Col sm={12} md={8} lg={6}>
             <InputGroup size="lg" className="mb-3">
               <Form.Control
@@ -113,7 +120,7 @@ const Language = () => {
                 aria-describedby="basic-addon2"
                 onChange={e=>setCap(e.target.value)}
               />
-              <Button onClick={()=>handleClick()}  variant="outline-dark" id="button-addon2">
+              <Button onClick={()=>handleClick()}  variant="outline-primary" id="button-addon2">
                 <Search height="5px" />
               </Button>
             </InputGroup>

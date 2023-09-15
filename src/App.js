@@ -1,5 +1,5 @@
 import {  Routes, Route } from "react-router-dom";
-import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from "./header";
 import Countries from "./pages/countries";
 import Capital from "./pages/capital";
@@ -7,6 +7,9 @@ import Language from "./pages/language";
 import Home from './home';
 import Down from './down';
 import NotFound from './svgs/notfound';
+import './App.css';
+
+
 function App() {
   return (
     <div className="App">

@@ -9,20 +9,25 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import NotFound from '../svgs/notfound';
 import Search from '../svgs/search';
+import Load from './load';
+import {useState} from 'react';
 
 const Countries = () => {
   const [feach ,setFeach] =React.useState(false);
   const [count ,setCount] =React.useState("");
   const [post, setPost] = React.useState(null);
+  const [loading, setLoading] = useState(false);
   function search(){
         setFeach(true);
+        setLoading(true);
         try{
           axios.get("https://restcountries.com/v2/name/"+count).then((response) => {
             setPost(response.data);
           }); 
           setPost(null);
+          setLoading(false);
         }catch(err){
-          
+          setLoading(false);
         }
   }
  
@@ -30,10 +35,11 @@ const Countries = () => {
       if (!feach) 
           return (
             <Container className="form_">
+              <Load run={loading} />
             <Row>
               <h4>Enter the name of the country or name abbreviation of the country in English only</h4><br/><br/><br/>
             </Row>
-            <Row className="justify-content-md-center">
+            <Row className="justify-content-center">
               <Col sm={12} md={8} lg={6}>
               <InputGroup size="lg" className="mb-3">
                 <Form.Control
@@ -43,7 +49,7 @@ const Countries = () => {
                   aria-describedby="basic-addon2"
                   onChange={e=>setCount(e.target.value)}
                 />
-                <Button onClick={()=>search()} variant="outline-dark" id="button-addon2">
+                <Button onClick={()=>search()} variant="outline-primary" id="button-addon2">
                   <Search height="5px" />
                 </Button>
               </InputGroup>
@@ -56,7 +62,8 @@ const Countries = () => {
           if(post===null)
             return (
               <Container className="form_">
-                <Row className="justify-content-md-center">
+                <Load run={loading} />
+                <Row className="justify-content-center">
                   <Col sm={12} md={8} lg={6}>
                   <InputGroup size="lg" className="mb-3">
                     <Form.Control
@@ -66,7 +73,7 @@ const Countries = () => {
                       aria-describedby="basic-addon2"
                       onChange={e=>setCount(e.target.value)}
                     />
-                    <Button onClick={()=>search()} variant="outline-dark" id="button-addon2">
+                    <Button onClick={()=>search()} variant="outline-primary" id="button-addon2">
                       <Search height="5px" />
                     </Button>
                   </InputGroup>
@@ -86,7 +93,8 @@ const Countries = () => {
 
           return (
             <Container className="form_">
-              <Row className="justify-content-md-center">
+              <Load run={loading} />
+              <Row className="justify-content-center">
                 <Col sm={12} md={8} lg={6}>
                 <InputGroup size="lg" className="mb-3">
                   <Form.Control
@@ -96,7 +104,7 @@ const Countries = () => {
                     aria-describedby="basic-addon2"
                     onChange={e=>setCount(e.target.value)}
                   />
-                  <Button onClick={()=>search()} variant="outline-dark" id="button-addon2">
+                  <Button onClick={()=>search()} variant="outline-primary" id="button-addon2">
                     <Search height="5px" />
                   </Button>
                 </InputGroup>
@@ -104,7 +112,10 @@ const Countries = () => {
               </Row>
               {
               post.slice(0, 8).map((item)=>
-              <Row className="con">
+              {
+              if(item.name!=="Israel")
+               return (
+               <Row className="con ">
                 <Col md={12} lg={6}>
                   <div className="div1">
                     <h3> full name : {item.name}</h3>
@@ -129,7 +140,7 @@ const Countries = () => {
                     </iframe>
                   </div>
                 </Col>
-              </Row>
+              </Row>)}
               
               )
               

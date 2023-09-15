@@ -9,6 +9,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import NotFound from '../svgs/notfound';
 import Search from '../svgs/search';
+import Load from './load';
 
 const Capital = () => {
 
@@ -25,20 +26,22 @@ const Capital = () => {
       axios.get("https://restcountries.com/v2/capital/"+cap).then((response) => {
         setData(response.data);}); 
         setData(null);
+        setLoading(false);
     } catch (err) {
         console.log("tesst");
         setData(null);
+        setLoading(false);
     }
-    setLoading(false);
 }
 
       if(feach===0)
         return (
           <Container className="form_">
+            <Load run={loading} />
           <Row>
             <h4>Enter the name of the capital in English only</h4><br/><br/><br/>
           </Row>
-          <Row className="justify-content-md-center">
+          <Row className="justify-content-center">
             <Col sm={12} md={8} lg={6}>
             <InputGroup size="lg" className="mb-3">
               <Form.Control
@@ -48,7 +51,7 @@ const Capital = () => {
                 aria-describedby="basic-addon2"
                 onChange={e=>setCap(e.target.value)}
               />
-              <Button onClick={()=>handleClick()}  variant="outline-dark" id="button-addon2">
+              <Button onClick={()=>handleClick()}  variant="outline-primary" id="button-addon2">
                <Search height="5px" />
               </Button>
             </InputGroup>
@@ -62,7 +65,8 @@ const Capital = () => {
   if(data===null)
     return (
       <Container className="form_">
-      <Row className="justify-content-md-center">
+        <Load run={loading} />
+      <Row className="justify-content-center">
         <Col sm={12} md={8} lg={6}>
         <InputGroup size="lg" className="mb-3">
           <Form.Control
@@ -72,7 +76,7 @@ const Capital = () => {
             aria-describedby="basic-addon2"
             onChange={e=>setCap(e.target.value)}
           />
-          <Button onClick={()=>handleClick()}  variant="outline-dark" id="button-addon2">
+          <Button onClick={()=>handleClick()}  variant="outline-primary" id="button-addon2">
             <Search height="5px" />
           </Button>
         </InputGroup>
@@ -90,7 +94,8 @@ const Capital = () => {
       if(feach===1)
         return (
           <Container className="form_">
-          <Row className="justify-content-md-center">
+            <Load run={loading} />
+          <Row className="justify-content-center">
             <Col sm={12} md={8} lg={6}>
             <InputGroup size="lg" className="mb-3">
               <Form.Control
@@ -100,7 +105,7 @@ const Capital = () => {
                 aria-describedby="basic-addon2"
                 onChange={e=>setCap(e.target.value)}
               />
-              <Button onClick={()=>handleClick()}  variant="outline-dark" id="button-addon2">
+              <Button onClick={()=>handleClick()}  variant="outline-primary" id="button-addon2">
                 <Search height="5px" />
               </Button>
             </InputGroup>
@@ -109,7 +114,10 @@ const Capital = () => {
 
             {
             data.slice(0, 8).map((item)=>
-            <Row className="con">
+            {
+              if(item.capital!=="Jerusalem")
+            return(
+            <Row className="con" >
                 <Col md={12} lg={6}>
                   <div className="div1">
                     <h3> capital : {item.capital}</h3>
@@ -135,7 +143,8 @@ const Capital = () => {
                     </iframe>
                   </div>
                 </Col>
-              </Row>
+              </Row>)
+              }
               )
             }
         </Container>
